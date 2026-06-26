@@ -105,6 +105,23 @@ class Vimeo_Embed_Widget extends \Elementor\Widget_Base {
 			]
 		);
 
+		// Force a definite width on the widget element. As an Elementor flex
+		// item it otherwise has no resolved main size, which stops the inner
+		// `aspect-ratio` box from reporting its height — the container then
+		// collapses to ~300px and the iframe overflows into the next element.
+		// A hidden control with a default value emits this rule for every
+		// instance, scoped to {{WRAPPER}} (the .elementor-element-… div).
+		$this->add_control(
+			'force_full_width',
+			[
+				'type'      => \Elementor\Controls_Manager::HIDDEN,
+				'default'   => 'yes',
+				'selectors' => [
+					'{{WRAPPER}}' => 'width: 100%;',
+				],
+			]
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -182,13 +199,14 @@ class Vimeo_Embed_Widget extends \Elementor\Widget_Base {
 		$disable_pointer = ( $settings['disable_pointer_events'] ?? '' ) === 'yes';
 		$aspect          = (float) ( $settings['aspect_ratio'] ?? 56.25 );
 
-		// The iframe is rendered as an in-flow element sized with the CSS
-		// `aspect-ratio` property. The previous approach (an absolutely
-		// positioned iframe inside a `padding-top` box) contributes zero
-		// height to the layout, so inside an Elementor flex container the
-		// widget collapses to 0px and overflows its neighbours — most
-		// visibly when columns stack on mobile. `aspect-ratio` gives the
-		// iframe a real, flex-resolvable height, like a regular image.
+		// The iframe is sized with the CSS `aspect-ratio` property on the inner
+		// box. For that height to be respected, the widget element itself needs
+		// a definite width: it is an Elementor flex item, and a flex item with
+		// no definite main size doesn't resolve the aspect-ratio box's height,
+		// so `.elementor-widget-container` collapses to its ~300px fallback and
+		// the taller iframe overflows downward into the next element. Forcing
+		// `width:100%` on {{WRAPPER}} (see register_controls) gives the definite
+		// width, so the height resolves and the container grows to fit.
 		//
 		// The aspect ratio control stores the height/width ratio as a
 		// percentage (16:9 = 56.25), so width/height = 100 / percentage.

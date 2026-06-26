@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Elementor Vimeo Widget
  * Description: Adds a Elementor Widget that allows embedding of Vimeo Videos without any Elementor parameter filtering.
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: LumenIQ
  * Author URI: https://www.lumeniq.uk
  * Text Domain: lumen-evw-embed
