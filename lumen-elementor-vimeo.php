@@ -1,35 +1,40 @@
 <?php
 /**
- * Plugin Name: Vimeo Widget for Elementor
- * Description: Adds a custom Elementor widget that outputs a Vimeo iframe without Elementor rewriting parameters.
- * Version: 1.0.0
+ * Plugin Name: Elementor Vimeo Widget
+ * Description: Adds a Elementor Widget that allows embedding of Vimeo Videos without any Elementor parameter filtering.
+ * Version: 1.0.1
  * Author: LumenIQ
  * Author URI: https://www.lumeniq.uk
- * Text Domain: lumen-elementor-vimeo
+ * Text Domain: lumen-evw-embed
  * 
- * Requires: Elementor
+ * Requires Plugins: elementor
  * 
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if (!defined('ABSPATH')) exit;
 
-add_action( 'plugins_loaded', function () {
+// Define plugin constants
+define('LUMEN_EVW_PLUGIN_FILE', __FILE__);
+define('LUMEN_EVW_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('LUMEN_EVW_PLUGIN_URL', plugin_dir_url(__FILE__));
 
-	// Elementor must be loaded
-	if ( ! did_action( 'elementor/loaded' ) ) {
-		add_action( 'admin_notices', function () {
-			echo '<div class="notice notice-warning"><p><strong>Raw Vimeo Widget:</strong> Elementor is not active.</p></div>';
-		});
-		return;
-	}
+// Extract version from plugin header
+$plugin_file_content = file_get_contents(__FILE__);
+if (preg_match('/Version:\s*(.+?)$/m', $plugin_file_content, $matches)) {
+  define('LUMEN_EVW_PLUGIN_VERSION', trim($matches[1]));
+}
 
-	// Register widget
-	add_action( 'elementor/widgets/register', function( $widgets_manager ) {
+// Load plugin classes
+require_once LUMEN_EVW_PLUGIN_DIR . 'includes/class-main.php';
 
-		require_once __DIR__ . '/widgets/class-raw-vimeo-widget.php';
+// Initialize the plugin
+LumenIQ_EVW::init();
 
-		$widgets_manager->register( new \LumenIQ\Elementor\Raw_Vimeo_Widget() );
-
-	} );
-
-} );
+/**
+ * Plugin Updater
+ */
+require_once __DIR__ . '/includes/GitHubUpdater.php';
+new GitHubUpdater( __FILE__, 'theiqgroup/lumen-elementor-vimeo', [
+    'proxy'  => 'https://lumeniq-wordpress-updates.azurewebsites.net',
+    'secret' => '0035326dd479-d261a076lumeniq',
+] );

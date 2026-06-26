@@ -1,0 +1,21 @@
+# VS Code
+.DS_Store
+.env
+.env.local
+.vscode/
+*.swp
+*.swo
+*~
+
+# IDE
+.idea/
+*.iml
+.phpstorm.xml
+
+# OS
+Thumbs.db
+Desktop.ini
+
+# Logs
+debug.log
+error.log
