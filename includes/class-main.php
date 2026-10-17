@@ -28,6 +28,51 @@ class LumenIQ_EVW {
 
     // Register widgets
     add_action('elementor/widgets/register', [__CLASS__, 'register_widgets']);
+
+    // Register front-end assets (enqueued on demand by the widgets)
+    add_action('elementor/frontend/after_register_scripts', [__CLASS__, 'register_scripts']);
+    add_action('elementor/frontend/after_register_styles', [__CLASS__, 'register_styles']);
+  }
+
+  /**
+   * Register Vimeo Video Slider scripts
+   */
+  public static function register_scripts() {
+    wp_register_script(
+      'lumen-evw-vimeo-player',
+      LUMEN_EVW_PLUGIN_URL . 'assets/js/vendor/vimeo-player.min.js',
+      [],
+      '2.30.4',
+      true
+    );
+
+    wp_register_script(
+      'lumen-evw-finish-detector',
+      LUMEN_EVW_PLUGIN_URL . 'assets/js/finish-detector.js',
+      [],
+      LUMEN_EVW_PLUGIN_VERSION,
+      true
+    );
+
+    wp_register_script(
+      'lumen-evw-vimeo-slider',
+      LUMEN_EVW_PLUGIN_URL . 'assets/js/vimeo-slider.js',
+      ['jquery', 'elementor-frontend', 'swiper', 'lumen-evw-vimeo-player', 'lumen-evw-finish-detector'],
+      LUMEN_EVW_PLUGIN_VERSION,
+      true
+    );
+  }
+
+  /**
+   * Register Vimeo Video Slider styles
+   */
+  public static function register_styles() {
+    wp_register_style(
+      'lumen-evw-vimeo-slider',
+      LUMEN_EVW_PLUGIN_URL . 'assets/css/vimeo-slider.css',
+      [],
+      LUMEN_EVW_PLUGIN_VERSION
+    );
   }
 
   /**
@@ -41,8 +86,11 @@ class LumenIQ_EVW {
    * Register Elementor widgets
    */
   public static function register_widgets($widgets_manager) {
+    require_once LUMEN_EVW_PLUGIN_DIR . 'includes/trait-vimeo-src.php';
     require_once LUMEN_EVW_PLUGIN_DIR . 'widgets/class-vimeo-embed.php';
+    require_once LUMEN_EVW_PLUGIN_DIR . 'widgets/class-vimeo-slider.php';
     $widgets_manager->register(new \LumenIQ\Elementor\Vimeo_Embed_Widget());
+    $widgets_manager->register(new \LumenIQ\Elementor\Vimeo_Slider_Widget());
   }
 
   /**

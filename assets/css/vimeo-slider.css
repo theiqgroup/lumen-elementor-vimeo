@@ -1,0 +1,79 @@
+/* Vimeo Video Slider: dots sit below the videos, as in the Slides widget popup. */
+.lumeniq-vimeo-slider {
+	position: relative;
+	width: 100%;
+}
+
+.lumeniq-vimeo-slider__swiper {
+	width: 100%;
+}
+
+.lumeniq-vimeo-slider .swiper-slide {
+	width: 100%;
+}
+
+.lumeniq-vimeo-slider .lumeniq-vimeo-inner {
+	max-width: 95%;
+	margin: 0 auto;
+}
+
+.lumeniq-vimeo-slider .lumeniq-vimeo-slider__dots {
+	position: static;
+	padding: 13px 0;
+	line-height: 0;
+	text-align: center;
+}
+
+.lumeniq-vimeo-slider .lumeniq-vimeo-slider__dots .swiper-pagination-bullet {
+	opacity: 1;
+}
+
+/* Mute button, over the video. */
+.lumeniq-vimeo-slider__swiper {
+	position: relative;
+}
+
+.lumeniq-vimeo-slider .lumeniq-vimeo-slider__mute {
+	position: absolute;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	padding: 8px;
+	border: 0;
+	border-radius: 50%;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: #fff;
+	cursor: pointer;
+	line-height: 0;
+}
+
+.lumeniq-vimeo-slider .lumeniq-vimeo-slider__mute svg {
+	width: 100%;
+	height: 100%;
+}
+
+/* Horizontal offsets include the 2.5% gutter left by the 95% video width. */
+.lumeniq-vimeo-slider__mute--bottom-right { right: calc(2.5% + 12px); bottom: 12px; }
+.lumeniq-vimeo-slider__mute--bottom-left { left: calc(2.5% + 12px); bottom: 12px; }
+.lumeniq-vimeo-slider__mute--top-right { right: calc(2.5% + 12px); top: 12px; }
+.lumeniq-vimeo-slider__mute--top-left { left: calc(2.5% + 12px); top: 12px; }
+
+.lumeniq-vimeo-slider__mute .lumeniq-vimeo-slider__icon-muted,
+.lumeniq-vimeo-slider__mute.is-muted .lumeniq-vimeo-slider__icon-sound {
+	display: none;
+}
+
+.lumeniq-vimeo-slider__mute.is-muted .lumeniq-vimeo-slider__icon-muted {
+	display: block;
+}
+
+/* Max Video Height: narrow the videos so their height stays within the cap.
+   Without the control the calc() is invalid and max-width stays `none`. */
+.lumeniq-vimeo-slider .lumeniq-vimeo-slider__swiper {
+	max-width: calc(var(--lumeniq-max-height) * var(--lumeniq-ratio));
+	margin-left: auto;
+	margin-right: auto;
+}

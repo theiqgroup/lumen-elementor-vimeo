@@ -5,6 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Vimeo_Embed_Widget extends \Elementor\Widget_Base {
 
+	use Vimeo_Src;
+
 	public function get_name() {
 		return 'lumeniq_vimeo_embed';
 	}
@@ -151,33 +153,6 @@ class Vimeo_Embed_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->end_controls_section();
-	}
-
-	private function build_src( $video_id, $hash, $params ) {
-		$video_id = preg_replace( '/\D+/', '', (string) $video_id );
-
-		if ( empty( $video_id ) ) return '';
-
-		$base = 'https://player.vimeo.com/video/' . $video_id;
-
-		$query = [];
-
-		// Include privacy hash if provided
-		if ( ! empty( $hash ) ) {
-			$query[] = 'h=' . rawurlencode( trim( $hash ) );
-		}
-
-		// Append raw params exactly as provided (no rewriting)
-		$params = trim( (string) $params );
-		if ( $params !== '' ) {
-			// Strip leading ? if user pasted it
-			$params = ltrim( $params, '?' );
-			$query[] = $params;
-		}
-
-		if ( empty( $query ) ) return $base;
-
-		return $base . '?' . implode( '&', $query );
 	}
 
 	protected function render() {

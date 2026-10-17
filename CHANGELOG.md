@@ -1,5 +1,9 @@
 # Change Log
 
+## v1.1.0 – Video Scroller - 17th October 2026
+
+- Add Video Scroller Option
+
 ## v1.0.3 – Mobile Fixes - 26th June 2026
 
 - Force full width on containers on mobile to stop overlapping.

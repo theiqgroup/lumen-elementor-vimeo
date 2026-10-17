@@ -1,8 +1,9 @@
 <?php
 /**
  * Plugin Name: Elementor Vimeo Widget
+ * Plugin URI: https://github.com/theiqgroup/lumen-elementor-vimeo
  * Description: Adds a Elementor Widget that allows embedding of Vimeo Videos without any Elementor parameter filtering.
- * Version: 1.0.3
+ * Version: 1.1.0
  * Author: LumenIQ
  * Author URI: https://www.lumeniq.uk
  * Text Domain: lumen-evw-embed
